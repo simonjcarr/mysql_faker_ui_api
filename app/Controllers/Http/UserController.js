@@ -14,7 +14,7 @@ class UserController {
     }else{
       return response.status(400).send("Unable to register a new account.")
     }
-    return response.json(token)
+    return response.json({user: user, token: token})
   }
 
   async login({ request, response, auth }) {

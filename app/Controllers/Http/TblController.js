@@ -37,17 +37,15 @@ class TblController {
 
   async update({ request, params, response, auth }){
     let user = await auth.getUser()
-    let table = await Table.find(params.tbl_id)
+    let table = await Table.query().where('id', params.tbl_id).with('database').first()
     let jsonTable = table.toJSON()
-    let database = await Database.query().where('id', jsonTable.id).where('user_id', user.id).first()
-    if(!database){
-      return response.status(400).send("Unable to alter table")
+    if(jsonTable.database.user_id !== user.id){
+      return response.status(403).send("Not Authorised")
     }
     table.table_name = request.input('table_name')
     table.fake_qty = request.input('fake_qty')
     table.table_comments = request.input('table_comments')
     await table.save()
-    table = await Table.query().where('id', table.id).with('fields').first()
     return response.json(table)
   }
 
