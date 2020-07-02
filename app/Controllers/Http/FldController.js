@@ -49,6 +49,17 @@ class FldController {
     return response.json(field)
   }
 
+  async destroy({ params, response, auth }) {
+    let user = await auth.getUser()
+    let field = await Field.query().where('id', params.fld_id).with('table.database').first()
+    let jsonField = field.toJSON()
+    if(jsonField.table.database.user_id !== user.id) {
+      return response.status(403).send("Not Authorised")
+    }
+    await field.delete()
+    return response.json(field)
+  }
+
   async storeFakeCommand({ request, response, auth }) {
     let user = await auth.getUser()
     let field = await Field.query().where('id', request.input('field_id')).with('table.database').first()
