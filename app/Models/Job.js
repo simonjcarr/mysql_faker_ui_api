@@ -3,18 +3,18 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class Database extends Model {
-  tables() {
-    return this.hasMany('App/Models/Tbl')
-  }
-
+class Job extends Model {
   user() {
     return this.belongsTo('App/Models/User')
   }
 
-  jobs() {
-    return this.hasMany('App/Models/Job')
+  database() {
+    return this.belongsTo('App/Models/Database')
+  }
+
+  log() {
+    return this.hasMany('App/Models/Joblog')
   }
 }
 
-module.exports = Database
+module.exports = Job

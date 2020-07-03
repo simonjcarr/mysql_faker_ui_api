@@ -54,3 +54,18 @@ Route.group(() => {
   Route.delete('/fake_command/:cmd_id', 'FldController.destroyFakeCommand')
   Route.put('/fake_command/:cmd_id', 'FldController.updateFakeCommand')
 }).prefix('api/v1/field').middleware(['auth'])
+
+//Job Routes
+Route.group(()=>{
+  Route.get('/:job_id', 'JobController.getJob')
+  Route.get('/user/user_id', 'JobController.getUsersJobs')
+  Route.get('/database/:db_id', 'JobControler.getDatabaseJobs')
+  Route.post('/', 'JobController.storeJob')
+  Route.delete('/:job_id', 'JobController.destroyJob')
+}).prefix('api/v1/job').middleware(['auth'])
+
+//Job Log Routes
+Route.group(()=>{
+  Route.get('/:job_id', 'JoblogController.getJobLogs')
+  Route.post('/', 'JoblogController.storeLogMessage')
+}).prefix('api/v1/job/log').middleware(['auth'])
