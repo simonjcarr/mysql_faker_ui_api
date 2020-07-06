@@ -1,5 +1,6 @@
 'use strict'
 const Job = use('App/Models/Job')
+const Database = use('App/Models/Database')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -32,7 +33,8 @@ class JobController {
     job.database_id = request.input('database_id')
     job.user_id = request.input('user_id')
     await job.save()
-    return response.json(job)
+    let database = await Database.find(request.input('database_id'))
+    return response.json({job, database})
   }
 
   async destroyJob({ params, response, auth }) {
