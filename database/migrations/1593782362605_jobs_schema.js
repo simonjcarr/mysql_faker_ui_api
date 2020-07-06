@@ -9,7 +9,8 @@ class JobsSchema extends Schema {
       table.increments()
       table.integer('user_id').unsigned().notNullable().references('id').inTable('users').onDelete('cascade')
       table.integer('database_id').unsigned().notNullable().references('id').inTable('databases').onDelete('cascade')
-      table.boolean('complete').defaultTo(false)
+      table.boolean('running').unsigned().defaultsTo(false)
+      table.boolean('complete').unsigned().defaultTo(false)
       table.timestamps()
     })
   }

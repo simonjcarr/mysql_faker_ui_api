@@ -26,6 +26,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'DatabaseController.getDatabases')
   Route.get('/:id', 'DatabaseController.getDatabase')
+
   Route.post('/', 'DatabaseController.store')
   Route.put('/:id', 'DatabaseController.update')
   Route.delete('/:id', 'DatabaseController.destroy')
@@ -69,3 +70,7 @@ Route.group(()=>{
   Route.get('/:job_id', 'JoblogController.getJobLogs')
   Route.post('/', 'JoblogController.storeLogMessage')
 }).prefix('api/v1/job/log').middleware(['auth'])
+
+Route.group(() => {
+  Route.get('/:db_id', 'DatabaseController.getJSON')
+}).prefix('api/v1/json')

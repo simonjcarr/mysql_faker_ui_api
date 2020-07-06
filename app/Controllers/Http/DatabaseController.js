@@ -1,5 +1,6 @@
 'use strict'
 const Database = use('App/Models/Database')
+const Promise = require('bluebird')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -59,6 +60,68 @@ class DatabaseController {
     }
     await database.delete()
     return response.json(database)
+  }
+
+  async getJSON({ params, response }) {
+    let database = await Database.query().where('id', params.db_id).with('tables.fields.commands').first()
+    database = database.toJSON()
+    let json = {}
+    json['database_name'] = database.database_name
+    json['drop'] = database.drop
+    json['tables'] = []
+    await Promise.map(database.tables, async (t) => {
+      let table = {
+        table_name: '',
+        fake_qty: '',
+        fields: []
+      }
+      table.table_name = t.table_name
+
+      //Check if parse int is a number or a string
+      let numCheck = parseInt(t.fake_qty)
+      if(Object.is(NaN, numCheck)){
+        table.fake_qty = t.fake_qty
+      }else{
+        table.fake_qty = parseInt(t.fake_qty)
+      }
+
+
+      await Promise.map(t.fields, async (f) => {
+        let field = {
+          name: '',
+          data_type: '',
+          size: '',
+          ai: false,
+          null: false,
+          pk: false,
+          index: false,
+          default: "",
+          fake: []
+        }
+        field.name = f.name
+        field.data_type = f.data_type
+        field.size = f.size
+        field.ai = f.auto_increment?true:false
+        field.null = f.nullable?true:false
+        field.pk = f.primary_key?true:false
+        field.default = ""
+
+        await Promise.map(f.commands, (c) =>{
+          let command = {
+            command: '',
+            percent: ''
+          }
+          command.command = c.command
+          command.percent = parseFloat(c.percent,2)
+          field.fake.push(command)
+        })
+
+        table.fields.push(field)
+
+      })
+      json.tables.push(table)
+    })
+    return response.json(json)
   }
 
 }

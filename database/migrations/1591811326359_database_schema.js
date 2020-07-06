@@ -12,6 +12,7 @@ class DatabaseSchema extends Schema {
       table.boolean('drop').defaultTo(true)
       table.string('project_name').notNullable()
       table.text('project_description')
+      table.text('json_config', 'longtext')
       table.timestamps()
     })
   }
