@@ -74,3 +74,10 @@ Route.group(()=>{
 Route.group(() => {
   Route.get('/:db_id', 'DatabaseController.getJSON')
 }).prefix('api/v1/json')
+
+Route.group(() => {
+  Route.post('/', 'ExportController.store').middleware(['auth'])
+  Route.get('/:db_id', 'ExportController.index').middleware(['auth'])
+  Route.get('/exportjob/:export_id', 'ExportController.getExport').middleware(['auth'])
+  Route.delete('/:export_id', 'ExportController.destroy').middleware(['auth'])
+}).prefix('api/v1/export')

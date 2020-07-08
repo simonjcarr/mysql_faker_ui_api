@@ -11,6 +11,10 @@ class Tbl extends Model {
   fields() {
     return this.hasMany('App/Models/Fld')
   }
+
+  exports() {
+    return this.hasMany('App/Models/Export')
+  }
 }
 
 module.exports = Tbl
