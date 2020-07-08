@@ -44,6 +44,7 @@ class FldController {
     field.auto_increment = request.input('auto_increment')
     field.nullable = request.input('nullable')
     field.primary_key = request.input('primary_key')
+    field.idx = request.input('idx')
     field.description = request.input('description')
     await field.save()
     return response.json(field)

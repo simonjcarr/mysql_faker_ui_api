@@ -14,6 +14,7 @@ class FldSchema extends Schema {
       table.boolean('auto_increment').defaultTo(false)
       table.boolean('nullable').defaultTo(true)
       table.boolean('primary_key').defaultTo(false)
+      table.boolean('idx').defaultTo(false)
       table.text('description')
       table.timestamps()
     })

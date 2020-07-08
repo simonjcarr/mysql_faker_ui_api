@@ -9,7 +9,7 @@ class TblSchema extends Schema {
       table.increments()
       table.integer('database_id').unsigned().notNullable().references('id').inTable('databases').onDelete('cascade')
       table.string('table_name').notNullable()
-      table.string('fake_qty').notNullable()
+      table.string('fake_qty')
       table.text('table_comments')
       table.timestamps()
     })

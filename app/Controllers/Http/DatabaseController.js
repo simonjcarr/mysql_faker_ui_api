@@ -104,6 +104,7 @@ class DatabaseController {
         field.ai = f.auto_increment?true:false
         field.null = f.nullable?true:false
         field.pk = f.primary_key?true:false
+        field.index = f.idx?true:false
         field.default = ""
 
         await Promise.map(f.commands, (c) =>{
