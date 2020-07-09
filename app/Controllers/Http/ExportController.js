@@ -33,6 +33,27 @@ class ExportController {
     return response.json(e)
   }
 
+  async update({ request, params, response, auth }) {
+    let user = await auth.getUser()
+    let database = await Database.query()
+    .where('id', request.input('database_id'))
+    .where('user_id', user.id)
+    .first()
+    if(!database){
+      return response.status(404).send("Database for user not found")
+    }
+    let e = await Export.find(params.id)
+    e.database_id = request.input('database_id')
+    e.tbl_id = request.input('tbl_id')
+    e.sql = request.input('sql')
+    e.format = request.input('format')
+    e.template = request.input('template')
+    e.active = request.input('active')
+    e.file_name = request.input('file_name')
+    await e.save()
+    return response.json(e)
+  }
+
   async index({ params, response, auth }) {
     let user = await auth.getUser()
     let database = await Database.query()
@@ -44,6 +65,17 @@ class ExportController {
     }
 
     let e = await Export.query().where('database_id', params.db_id).with('table').fetch()
+    return response.json(e)
+  }
+
+  async destroy({ params, response, auth }) {
+    let user = await auth.getUser()
+    let e = await Export.query().where('id', params.id).with('database').first()
+    let jsonE = e.toJSON()
+    if(jsonE.database.user_id !== user.id){
+      return response.status(403).send("Not Authorized")
+    }
+    await e.delete()
     return response.json(e)
   }
 }

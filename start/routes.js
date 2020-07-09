@@ -77,7 +77,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('/', 'ExportController.store').middleware(['auth'])
+  Route.put('/:id', 'ExportController.update').middleware(['auth'])
   Route.get('/:db_id', 'ExportController.index').middleware(['auth'])
   Route.get('/exportjob/:export_id', 'ExportController.getExport').middleware(['auth'])
-  Route.delete('/:export_id', 'ExportController.destroy').middleware(['auth'])
+  Route.delete('/:id', 'ExportController.destroy').middleware(['auth'])
 }).prefix('api/v1/export')

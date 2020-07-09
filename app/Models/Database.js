@@ -15,6 +15,10 @@ class Database extends Model {
   jobs() {
     return this.hasMany('App/Models/Job')
   }
+
+  exports() {
+    return this.hasMany('App/Models/Export')
+  }
 }
 
 module.exports = Database

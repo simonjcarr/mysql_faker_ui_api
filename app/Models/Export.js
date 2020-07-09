@@ -7,6 +7,9 @@ class Export extends Model {
   table() {
     return this.belongsTo('App/Models/tbl')
   }
+  database() {
+    return this.belongsTo('App/Models/Database')
+  }
 }
 
 module.exports = Export
