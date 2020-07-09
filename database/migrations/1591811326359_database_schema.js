@@ -13,6 +13,7 @@ class DatabaseSchema extends Schema {
       table.string('project_name').notNullable()
       table.text('project_description')
       table.text('json_config', 'longtext')
+      table.string('status')
       table.timestamps()
     })
   }

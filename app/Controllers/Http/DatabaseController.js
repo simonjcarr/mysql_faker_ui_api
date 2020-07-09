@@ -125,6 +125,17 @@ class DatabaseController {
     return response.json(json)
   }
 
+  async updateStatus({ params, request, response, auth }) {
+    let user = await auth.getUser()
+    let database = await Database.query().where('user_id', user.id).where('id', params.id).first()
+    if(!database) {
+      return response.code(404).send('Database not found for user')
+    }
+    database.status = request.input('status')
+    await database.save()
+    return response.json(database)
+  }
+
 }
 
 module.exports = DatabaseController

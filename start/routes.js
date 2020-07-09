@@ -29,6 +29,7 @@ Route.group(() => {
 
   Route.post('/', 'DatabaseController.store')
   Route.put('/:id', 'DatabaseController.update')
+  Route.put('/status/:id', 'DatabaseController.updateStatus')
   Route.delete('/:id', 'DatabaseController.destroy')
 }).prefix('api/v1/database').middleware(['auth'])
 
