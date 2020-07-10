@@ -11,6 +11,7 @@ class ExportSchema extends Schema {
       table.integer('tbl_id')
       table.text('sql', 'longtext')
       table.string('format',20)
+      table.string('sql_insert_table', 100)
       table.string('file_name',150)
       table.text('template', 'longtext')
       table.boolean('active').defaultTo(true)
