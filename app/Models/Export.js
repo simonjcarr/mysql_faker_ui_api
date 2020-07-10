@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Export extends Model {
   table() {
-    return this.belongsTo('App/Models/tbl')
+    return this.belongsTo('App/Models/Tbl')
   }
   database() {
     return this.belongsTo('App/Models/Database')
