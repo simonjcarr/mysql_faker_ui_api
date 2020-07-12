@@ -66,7 +66,7 @@ class ExportController {
       return response.status(404).send("Database for user not found")
     }
 
-    let e = await Export.query().where('database_id', params.db_id).with('table').fetch()
+    let e = await Export.query().where('database_id', params.db_id).with('table').with('file').fetch()
     return response.json(e)
   }
 

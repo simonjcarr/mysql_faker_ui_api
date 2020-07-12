@@ -83,3 +83,10 @@ Route.group(() => {
   Route.get('/exportjob/:export_id', 'ExportController.getExport').middleware(['auth'])
   Route.delete('/:id', 'ExportController.destroy').middleware(['auth'])
 }).prefix('api/v1/export')
+
+Route.group(()=>{
+  Route.post('/', 'ExportfileController.store')
+  Route.get('/download/zip/:database_id', 'ExportfileController.downloadAllZipped')
+  Route.get('/download/:file_id', 'ExportfileController.downloadFile')
+  Route.get('/list/:database_id', 'ExportfileController.fileList')
+}).prefix('api/v1/export/file')

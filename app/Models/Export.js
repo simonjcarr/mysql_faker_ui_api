@@ -10,6 +10,9 @@ class Export extends Model {
   database() {
     return this.belongsTo('App/Models/Database')
   }
+  file(){
+    return this.hasOne('App/Models/Exportfile')
+  }
 }
 
 module.exports = Export

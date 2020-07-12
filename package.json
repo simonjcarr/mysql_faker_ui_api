@@ -27,7 +27,8 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
     "bluebird": "^3.7.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "zip-a-folder": "0.0.12"
   },
   "devDependencies": {},
   "autoload": {
