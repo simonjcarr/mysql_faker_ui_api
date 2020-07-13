@@ -31,20 +31,16 @@ class ExportfileController {
         .where("database_id", params.database_id)
         .with("database")
         .fetch();
-
       if (!files) {
         return response.status(404).send("No Files found");
       }
-
-      let jsonFiles = files.toJSON();
-      let filesFolder = path.dirname(jsonFiles[0].path);
-      let database_name = jsonFiles[0].database.database_name;
-      let zipPath = path.join(filesFolder, database_name + ".zip");
-      console.log(zipPath)
+      try{
+        var jsonFiles = files.toJSON();
+        var filesFolder = path.dirname(jsonFiles[0].path);
+        var database_name = jsonFiles[0].database.database_name;
+      }catch(err){}
       await zip(filesFolder, `./${database_name}.zip`);
       return response.download(`./${database_name}.zip`);
-      // fs.unlink(`./${database_name}.zip`)
-
     } catch (err) {
       console.log(err);
     }
@@ -53,7 +49,6 @@ class ExportfileController {
 
   async downloadFile({ params, response }) {
     let file = await Exportfile.find(params.file_id);
-    console.log(file.path);
     return response.download(file.path);
   }
 }
