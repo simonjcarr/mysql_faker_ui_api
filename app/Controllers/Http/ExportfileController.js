@@ -3,6 +3,7 @@ const Exportfile = use("App/Models/Exportfile");
 const { zip } = require("zip-a-folder");
 var path = require("path");
 const fs = require('fs')
+const Env = use('Env')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -38,8 +39,8 @@ class ExportfileController {
       var jsonFiles = files.toJSON();
       var filesFolder = path.dirname(jsonFiles[0].path);
       var database_name = jsonFiles[0].database.database_name;
-      await zip(filesFolder, `./${database_name}.zip`);
-      return response.download(`./${database_name}.zip`);
+      await zip(filesFolder, path.join(Env.get("ZIP_FILE_PATH"),database_name + '.zip'));
+      return response.download(path.join(Env.get("ZIP_FILE_PATH"),database_name + '.zip'));
     } catch (err) {}
 
   }
