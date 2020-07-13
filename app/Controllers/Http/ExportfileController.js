@@ -34,16 +34,13 @@ class ExportfileController {
       if (!files) {
         return response.status(404).send("No Files found");
       }
-      try{
-        var jsonFiles = files.toJSON();
-        var filesFolder = path.dirname(jsonFiles[0].path);
-        var database_name = jsonFiles[0].database.database_name;
-      }catch(err){}
+
+      var jsonFiles = files.toJSON();
+      var filesFolder = path.dirname(jsonFiles[0].path);
+      var database_name = jsonFiles[0].database.database_name;
       await zip(filesFolder, `./${database_name}.zip`);
       return response.download(`./${database_name}.zip`);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
 
   }
 
