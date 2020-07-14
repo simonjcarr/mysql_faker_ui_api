@@ -1,6 +1,10 @@
 'use strict'
 const Database = use('App/Models/Database')
+const Helpers = use('Helpers')
+const fs = Helpers.promisify(require('fs'))
+const path = require('path')
 const Promise = require('bluebird')
+const rimraf = require('rimraf')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -23,7 +27,6 @@ class DatabaseController {
   }
 
   async store({ request, response, auth }) {
-    console.log(request.input('name'))
     let user = await auth.getUser()
     let database = new Database()
     database.database_name = request.input('name')
@@ -54,10 +57,18 @@ class DatabaseController {
 
   async destroy({ params, response, auth }) {
     let user = await auth.getUser()
-    let database = await Database.query().where('user_id', user.id).where('id', params.id).first()
+    let database = await Database.query().where('user_id', user.id).where('id', params.id).with('files').first()
     if(!database) {
       return response.code(404).send('Database not found')
     }
+    //Delete any export files
+    let jsonDatabase = database.toJSON()
+    let files = jsonDatabase.files
+    try{
+      let exportFolder = path.dirname(files[0].path)
+      rimraf(exportFolder, () =>{})
+    }catch(err){}
+
     await database.delete()
     return response.json(database)
   }

@@ -96,7 +96,6 @@ class FldController {
     let user = await auth.getUser()
     let commands = await Field.query().where('id', params.fld_id).with('commands').with('table.database').first()
     let jsonCommands = commands.toJSON()
-    console.log(jsonCommands)
     if(jsonCommands.table.database.user_id !== user.id){
       return response.status(403).send("Not Authorized")
     }
