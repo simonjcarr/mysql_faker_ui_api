@@ -10,7 +10,7 @@ class FldSchema extends Schema {
       table.integer('tbl_id').unsigned().notNullable().references('id').inTable('tbls').onDelete('cascade')
       table.string('name').notNullable()
       table.string('data_type').notNullable()
-      table.string('size').notNullable()
+      table.string('size')
       table.boolean('auto_increment').defaultTo(false)
       table.boolean('nullable').defaultTo(true)
       table.boolean('primary_key').defaultTo(false)

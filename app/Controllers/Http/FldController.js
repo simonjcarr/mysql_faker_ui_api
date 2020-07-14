@@ -26,7 +26,22 @@ class FldController {
   }
 
   async update({ request, response, params, auth }) {
-
+    let user = await auth.getUser()
+    let table = await Table.query().where('id', request.input('tbl_id')).with('database').first()
+    let jsonTable = table.toJSON()
+    if(jsonTable.database.user_id !== user.id){
+      return response.status(403).send("You don't have permission to add fields to this table")
+    }
+    let field = await Field.find(params.fld_id)
+    field.name = request.input('name')
+    field.data_type = request.input('data_type')
+    field.size = request.input('size')
+    field.auto_increment = request.input('auto_increment')
+    field.nullable = request.input('nullable')
+    field.idx = request.input('idx')
+    field.description = request.input('description')
+    await field.save()
+    return response.json(field)
   }
 
   async store({ request, response, auth }) {
