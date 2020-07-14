@@ -90,3 +90,7 @@ Route.group(()=>{
   Route.get('/download/:file_id', 'ExportfileController.downloadFile')
   Route.get('/list/:database_id', 'ExportfileController.fileList')
 }).prefix('api/v1/export/file')
+
+Route.group(() => {
+  Route.post('/mssql/structure', 'ExternaldatabaseController.mssql')
+}).prefix('api/v1/externaldb')
