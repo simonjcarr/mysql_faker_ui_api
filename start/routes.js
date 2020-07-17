@@ -94,3 +94,12 @@ Route.group(()=>{
 Route.group(() => {
   Route.post('/mssql/structure', 'ExternaldatabaseController.mssql')
 }).prefix('api/v1/externaldb')
+
+Route.group(() => {
+  Route.get('/', 'RemotedbController.getUserConnections')
+  Route.post('/', 'RemotedbController.storeConnection')
+  Route.post('/connection/test', 'RemotedbController.testConnection')
+  Route.delete('/:id', 'RemotedbController.destroyConnection')
+  Route.get('/tables/:remote_id', 'RemotedbController.getRemoteTables')
+  Route.get('/table/schema/:remote_id/:table_name', 'RemotedbController.getTableColumns')
+}).prefix('api/v1/remote').middleware(['auth'])

@@ -46,6 +46,10 @@ class User extends Model {
   jobs() {
     return this.hasMany('App/Models/Job')
   }
+
+  connections() {
+    return this.hasMany('App/Models/Remotedb')
+  }
 }
 
 module.exports = User
