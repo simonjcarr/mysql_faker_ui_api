@@ -47,7 +47,7 @@ class DatabaseController {
     if(!database) {
       return response.code(404).send('Database not found')
     }
-    database.database_name = request.input('database_name')
+    database.database_name = user.username + "_" + request.input('database_name')
     database.drop = request.input('drop')
     database.project_name = request.input('project_name')
     database.project_description = request.input('project_description')
