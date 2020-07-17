@@ -46,7 +46,7 @@ class FldController {
 
   async store({ request, response, auth }) {
     let user = await auth.getUser()
-    let table = await Table.query().where('id', request.input('id')).with('database').first()
+    let table = await Table.query().where('id', request.input('tbl_id')).with('database').first()
     let jsonTable = table.toJSON()
     if(jsonTable.database.user_id !== user.id){
       return response.status(403).send("You don't have permission to add fields to this table")
