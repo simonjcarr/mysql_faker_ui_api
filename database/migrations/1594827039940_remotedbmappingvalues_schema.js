@@ -9,7 +9,7 @@ class RemotedbmappingvaluesSchema extends Schema {
       table.increments()
       table.integer('remotedbmapping_id').unsigned().notNullable().references('id').inTable('remotedbmappings').onDelete('cascade')
       table.string('remotefield').notNullable()
-      table.string('fld_id').unsigned().notNullable().references('id').inTable('flds').onDelete(('cascade'))
+      table.string('fld_id').unsigned().notNullable().references('id').inTable('flds').onDelete('cascade')
       table.string('fakecmd').notNullable()
       table.timestamps()
     })
