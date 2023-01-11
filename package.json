@@ -27,7 +27,7 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
     "bluebird": "^3.7.2",
-    "knex": "^0.21.2",
+    "knex": "^2.4.0",
     "mssql": "^4.1.0",
     "mysql": "^2.18.1",
     "rimraf": "^3.0.2",
